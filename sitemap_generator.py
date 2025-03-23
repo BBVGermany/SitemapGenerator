@@ -5,14 +5,16 @@ import os
 
 import last_modified_by_git
 
-def generate_sitemap(json_file, output_file="sitemap.xml"):
+def generate_sitemap(rootDir, output_file="sitemap.xml"):
     """Generates a sitemap.xml from a JSON file"""
 
-    if not os.path.exists(json_file):
-        print(f"❌ Error: File '{json_file}' not found.")
+    jsonPath = rootDir + "/src/pages/pages.json"
+
+    if not os.path.exists(jsonPath):
+        print(f"❌ Error: File '{jsonPath}' not found.")
         return
 
-    with open(json_file, "r", encoding="utf-8") as file:
+    with open(jsonPath, "r", encoding="utf-8") as file:
         json_data = json.load(file)
 
     # Create the root element with the correct namespace
@@ -41,7 +43,7 @@ def generate_sitemap(json_file, output_file="sitemap.xml"):
         if changefreq_value:
             ET.SubElement(url_elem, "changefreq").text = changefreq_value
         
-        last_modified = last_modified_by_git.get_last_modified_time("../Client" + entry.get("srcFile") + ".tsx")
+        last_modified = last_modified_by_git.get_last_modified_time(rootDir + entry.get("srcFile") + ".tsx")
         if last_modified:
             ET.SubElement(url_elem, "lastmod").text = last_modified
 
