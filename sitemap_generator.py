@@ -19,8 +19,6 @@ def generate_sitemap(json_file, output_file="sitemap.xml"):
     urlset = ET.Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
 
     for key, entry in json_data.items():  # Iterate over dictionary values
-        
-        print(last_modified_by_git.get_last_modified_date("../Client", "../Client" + entry.get("srcFile") + ".tsx"))
 
         if not isinstance(entry, dict):  # Ensure it's a dictionary
             continue
@@ -42,6 +40,11 @@ def generate_sitemap(json_file, output_file="sitemap.xml"):
         changefreq_value = entry.get("changefreq") # Support both
         if changefreq_value:
             ET.SubElement(url_elem, "changefreq").text = changefreq_value
+        
+        last_modified = last_modified_by_git.get_last_modified_time("../Client" + entry.get("srcFile") + ".tsx")
+        if last_modified:
+            ET.SubElement(url_elem, "lastmod").text = last_modified
+
 
     # Convert to XML and write to file
     tree = ET.ElementTree(urlset)
