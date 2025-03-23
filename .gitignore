@@ -1,0 +1,25 @@
+# Ignore compiled Python files
+__pycache__/
+
+# Ignore dependency cache (if applicable)
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments (if using venv)
+venv/
+.env/
+*.env
+
+# Ignore Docker build cache (optional)
+*.log
+.dockerignore
+
+# Ignore generated files
+sitemap.xml  # If this file is generated dynamically
+last_modified_by_git.py  # If this is a temporary script for fetching data
+
+# Ignore editor-specific configuration (optional)
+.vscode/
+.idea/
+*.xml
